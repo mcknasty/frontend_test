@@ -5,11 +5,36 @@
 	<link type="text/css" rel="stylesheet" href="../css/style.css" />
 	<style type="text/css">
 		#rotator {
+			position: relative;
 			width: 450px;
-			height: 300px;
+			height: 265px;
 			border: 1px solid black;
-			background: #aaa;
 			text-align: center;
+			overflow: hidden;
+		}
+		#rotator ul{
+			padding: 0px;
+			list-style-type:none;
+			margin: 0px;
+	    position:absolute;
+	    left:0;
+		}
+		#rotator ul li h4 {
+	    position: absolute;
+	    top: 175px;
+		}
+		#rotator ul li p {
+			position: absolute;
+			top: 195px;
+		}
+		#rotator ul li {
+			margin: 0px;
+		  padding: 0px;
+		  position: relative;
+			float: left;
+			display:inline-block;
+			width: 450px;
+			height: 269px;
 		}
 	</style>
 </head>
@@ -51,9 +76,71 @@
 	<hr/>
 
 	<div id="rotator">
-		Rotator Here
+		<ul>
+			<li>
+				<h4>Katarina</h4>
+				<p>Fruitcake bonbon donut jelly-o brownie biscuit marzipan pie.</p>
+				<img src="../img/kat_1.jpg" /><br/>
+			</li>
+			<li>
+				<h4>Red Card Katarina</h4>
+				<p>Cheesecake marzipan cupcake biscuit candy canes pudding.</p>
+				<img src="../img/kat_2.jpg" /><br/>
+			</li>
+			<li>
+				<h4>Kitty Cat Katarina</h4>
+				<p>Applicake topping halvah lemon drops wypas cotton candy.</p>
+				<img src="../img/kat_3.jpg" /><br/>
+			</li>
+			<li>
+				<h4>High Command Katarina</h4>
+				<p>Oat cake macaroon souffle cupcake chupa chups chocolate bar bear claw dragee lemon drops.</p>
+				<img src="../img/kat_4.jpg" /><br/>
+			</li>
+		</ul>
 	</div>
 </div>
+<script>
+	
+  function init(){
+		list = document.getElementById('rotator').getElementsByTagName('ul')[0];
+		listItems = document.getElementById('rotator').getElementsByTagName('li');
+		imgs = document.getElementById('rotator').getElementsByTagName('img');
+		var width = 0;
+		for (var i = 0; i < imgs.length; i++) {
+			width += listItems[i].offsetWidth;
+		}
+		
+		var itemWidth = width / listItems.length;
+		move(list, width, itemWidth);
+  }
+  
+  function move(list, width, itemWidth){
+		var end = -1 * (width - itemWidth) + 'px',
+		animate;
+		list.style.left = 0 + 'px';
+		animate = setInterval(function() {
+			if (list.style.left == end) {
+				//clearInterval(animate);
+				list.style.left = 0 + 'px';
+				//move(list, width, itemWidth);
+			}
+			switchSlide(list, width, itemWidth);
+		}, 5000);
+  }
+	
+	function switchSlide(list, width, itemWidth) {
+		list.style.left = (parseInt(list.style.left) <= -1 * width - itemWidth) ? 0 + 'px' : list.style.left;
+		slideEnd =  parseInt(list.style.left) - 450 + 'px';
+		animate2 = setInterval(function(){
+			list.style.left = parseInt(list.style.left) - 10 + 'px';
+			if(list.style.left == slideEnd) {
+				clearInterval(animate2);
+			}
+		}, 10);
+	}
 
+  window.onload = init;
+</script>
 </body>
 </html>

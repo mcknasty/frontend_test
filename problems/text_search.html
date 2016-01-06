@@ -3,6 +3,12 @@
 <head>
 	<title>Frontend Coding Test | Text Search</title>
 	<link type="text/css" rel="stylesheet" href="../css/style.css" />
+	<style>
+		#search_text span.highlight{
+	    background-color:#FF9;
+	    color:#555;
+		}
+	</style>
 </head>
 <body>
 <div id="headwrap">
@@ -27,14 +33,13 @@
 	<hr/>
 
 	<h2>Search</h2>
-	<form>
+	<form onsubmit="return false;" action="">
 		<input type="text" id="search_input" value="llama" />
-		<input type="submit" value="Search" />
+		<input type="submit" value="Search" onclick="search()" />
 	</form>
 
 	<h3>Results</h3>
-	Found 0 occurances of the word "llama" in the below text.
-
+	Found <span id="count">0</span> occurances of the word <span id="word">"llama"</span> in the below text.
 	<hr/>
 
 	<h2>Search Text</h2>
@@ -53,6 +58,40 @@
 		</p>
 	</div>
 </div>
-
+	<script>
+		var searchDivText = document.getElementById('search_text').innerHTML;
+		function getTextToSearch() {
+			var searchDiv = document.getElementById('search_text');
+			return searchDiv.textContent.toLowerCase() || searchDiv.innerText.toLowerCase() || "";
+		}
+		function search() {
+			removeHighlights();
+			var searchString = document.getElementById('search_input');
+			if(searchString.value) {
+				var escapedSearchString = regexEscape(searchString.value.toLowerCase());
+				var searchText = getTextToSearch();
+				var re = new RegExp(escapedSearchString, "g");
+				var matches = searchText.match(re);
+				document.getElementById("word").innerHTML = '"' + searchString.value + '"';
+				if(matches) {
+					document.getElementById("count").innerHTML = matches.length;
+					var query = new RegExp("(\\b" + searchString.value + "\\b)", "gim");
+					var enew = document.getElementById("search_text").innerHTML;
+					var newe = enew.replace(query, "<span class=\"highlight\">$1</span>");
+					document.getElementById("search_text").innerHTML = newe
+				}
+				else {
+					document.getElementById("count").innerHTML = "0";
+				}
+			}
+			return false;
+		}
+		function regexEscape(s) {
+			return s.replace(/[-\/\\^$*+?.()|[\]{}]/g, '\\$&');
+		};
+		function removeHighlights(){
+			document.getElementById('search_text').innerHTML = searchDivText;
+		};
+	</script>
 </body>
 </html>

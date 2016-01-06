@@ -4,6 +4,11 @@
 	<title>Frontend Coding Test</title>
 	<link type="text/css" rel="stylesheet" href="../css/style.css" />
 	<style type="text/css">
+		.clearfix {
+		  overflow: auto;
+		  zoom: 1;
+		}
+		
 		.picture {
 			background-color: #F9F9F9;
 			border: 1px solid #CCCCCC; padding: 3px;
@@ -16,6 +21,46 @@
 		.picture img {
 			border: 1px solid #CCCCCC;
 			vertical-align:middle; margin-bottom: 3px;
+		}
+		
+		#container {
+			background: #FFF;
+			padding: 2px 5px;
+			width: 650px;
+		}
+		
+		#container p {
+			float: left;
+			clear: left;
+			padding: 20px 10px;
+			margin: 0px;
+			background: #FFF;
+			color: #000;
+			border: 1px solid #000;
+	    top: -2px;
+	    position: relative;
+		}
+		
+		.hidden {
+			display:none;
+		}
+		
+		#container h3 { 
+			float:left;
+			padding: 10px 10px;
+			background: #FFF;
+			color: #000;
+			border: 1px solid;
+			margin-bottom: 0px;
+			font-size: 14px;
+			cursor: pointer;
+		}
+		#container h3.active {
+			border-top: 3px solid #000;
+			border-left: 3px solid #000;
+			border-right: 3px solid #000;
+	    top: -2px;
+	    position: relative;
 		}
 	</style>
 </head>
@@ -38,25 +83,37 @@
 		</div>
 
 		<hr/>
-
-		<div id="container">
-			Turn this content into a tabbed container.
-
-			<h3>Tab 1</h3>
+		Turn this content into a tabbed container.
+		<div id="container" class="clearfix">
+			<h3 onclick="switchTab(0);" class="active">Tab 1</h3>
+			<h3 onclick="switchTab(1);">Tab 2</h3>
+			<h3 onclick="switchTab(2);">Tab 3</h3>
 			<p>
 				Gingerbread muffin gummies gingerbread macaroon. Lollipop candy applicake toffee faworki. Bear claw topping jelly toffee toffee powder tiramisu candy chupa chups. Chupa chups dragee icing applicake chupa chups dessert. Croissant jelly faworki marzipan tootsie roll marshmallow. Marshmallow toffee sweet roll fruitcake.
 			</p>
-
-			<h3>Tab 2</h3>
-			<p>
+			<p class="hidden">
 				Chocolate faworki croissant brownie halvah macaroon gummi bears wypas. Chupa chups icing gummies pudding dessert carrot cake. Cupcake jelly beans sweet roll icing ice cream apple pie tootsie roll gummi bears marzipan. Brownie gummies chupa chups pie. Cupcake jujubes topping. 
 			</p>
-
-			<h3>Tab 3</h3>
-			<p>
+			<p class="hidden">
 				Cheesecake jelly beans ice cream lollipop sweet pastry. Chupa chups dessert cheesecake sesame snaps. Cookie ice cream candy canes pastry cake muffin. Icing chocolate sweet gummi bears powder oat cake oat cake lemon drops.
 			</p>
 		</div>
 	</div>
+	<script>
+		function switchTab(index){
+			var pTags = document.getElementById('container').getElementsByTagName('p');
+			var h3Tags = document.getElementById('container').getElementsByTagName('h3');
+			for(var i = 0; i < pTags.length; i++) {
+				if(i != index){
+					pTags[i].setAttribute('class', 'hidden');
+					h3Tags[i].setAttribute('class', '');
+				}
+				else {
+					pTags[i].setAttribute('class', '');
+					h3Tags[i].setAttribute('class', 'active');		
+				}
+			}
+		}
+	</script>
 </body>
 </html>
