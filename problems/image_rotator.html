@@ -121,16 +121,18 @@
 		list.style.left = 0 + 'px';
 		animate = setInterval(function() {
 			if (list.style.left == end) {
-				//clearInterval(animate);
 				list.style.left = 0 + 'px';
-				//move(list, width, itemWidth);
+				setTimeout(function(){ 
+					switchSlide(list, width, itemWidth);
+				}, 3000);
 			}
-			switchSlide(list, width, itemWidth);
+			else { 
+				switchSlide(list, width, itemWidth);
+			}
 		}, 5000);
   }
 	
 	function switchSlide(list, width, itemWidth) {
-		list.style.left = (parseInt(list.style.left) <= -1 * width - itemWidth) ? 0 + 'px' : list.style.left;
 		slideEnd =  parseInt(list.style.left) - 450 + 'px';
 		animate2 = setInterval(function(){
 			list.style.left = parseInt(list.style.left) - 10 + 'px';
